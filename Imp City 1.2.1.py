@@ -304,6 +304,37 @@ while megakill == 0:
                 ngmemoryModifers.append(baby[1])
                 ngproximityModifiers.append(baby[2])
                 ngbases.append(baby[3])
+                
+                if baby[3][0] == max(baby[3]):
+                    if baby[2][0][0] == max(baby[2][0]):      #hostile general, hostile close
+                        xCoords[0].append(baby[0][0])
+                        yCoords[0].append(baby[0][1])
+                    elif baby[2][0][1] == max(baby[2][0]):    #hostile general, neutral close
+                        xCoords[1].append(baby[0][0])
+                        yCoords[1].append(baby[0][1])
+                    elif baby[2][0][2] == max(baby[2][0]):    #hostile general, friendly close
+                        xCoords[2].append(baby[0][0])
+                        yCoords[2].append(baby[0][1])
+                elif baby[3][1] == max(baby[3]):
+                    if baby[2][0][0] == max(baby[2][0]):      #neutral general, hostile close
+                        xCoords[3].append(baby[0][0])
+                        yCoords[3].append(baby[0][1])
+                    elif baby[2][0][1] == max(baby[2][0]):    #neutral general, neutral close
+                        xCoords[4].append(baby[0][0])
+                        yCoords[4].append(baby[0][1])
+                    elif baby[2][0][2] == max(baby[2][0]):    #neutral general, friendly close
+                        xCoords[5].append(baby[0][0])
+                        yCoords[5].append(baby[0][1])
+                elif baby[3][2] == max(baby[3]):
+                    if baby[2][0][0] == max(baby[2][0]):      #friendly general, hostile close
+                        xCoords[6].append(baby[0][0])
+                        yCoords[6].append(baby[0][1])
+                    elif baby[2][0][1] == max(baby[2][0]):    #friendly general, neutral close
+                        xCoords[7].append(baby[0][0])
+                        yCoords[7].append(baby[0][1])
+                    elif baby[2][0][2] == max(baby[2][0]):    #friendly general, friendly close
+                        xCoords[8].append(baby[0][0])
+                        yCoords[8].append(baby[0][1])
     
     print(len(impLocations))
     print("*****")
