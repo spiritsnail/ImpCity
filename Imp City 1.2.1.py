@@ -1,5 +1,5 @@
-# Imp City 1.2.1
-# "Monkey See"
+# Imp City 1.2.1z
+# "Bored Zack"
 
 import numpy
 import random
@@ -25,6 +25,12 @@ foodlist = numpy.ones([1,len(impLocations)])[0]
 #the maximum more than your share that a relationship can be
 egalitarianism = 100
 
+#mobility is a number between 0 and 1
+#0 mobility causes imps to select at the inverse of distance
+#1 mobility causes imps to select at the inverse square of distance
+#CAUTION! High mobility favors evil imps
+mobility = .5
+
 #base traits
 baseT = numpy.array([10, 10, 10])
 
@@ -39,11 +45,11 @@ memoryModifierVariation = 1/3
 memoryModifierEntropy = 1/30
 
 #reproduction constants
-floweringDistance = 1/2
-floweringStddev = 1/8
+floweringDistance = 1/3
+floweringStddev = floweringDistance/4
 
 #expanded prisoner's dilemma
-consequenceMatrix = numpy.array([[-.25,0,.3],[-.05,0,.05],[-.4,0,.2]])
+consequenceMatrix = numpy.array([[-.25,0,.3],[-.05,0,.05],[-.4,0,.2]])/5
 
 #CRUNCH
 bases = [] #base behavior matrix (1,3)
@@ -148,27 +154,27 @@ while ccd1 < len(impLocations):
         proxlist[0][tct] = ccd1
         proxlist[1][tct] = ccd2
         dis = numpy.linalg.norm(impLocations[ccd1]-impLocations[ccd2])
-        proxlist[2][tct] = 1/(dis*dis) #proximity
+        proxlist[2][tct] = 1/(math.pow(dis,2-mobility)) #proximity
         tct += 1
 
     ccd1 += 1
 
 while megakill == 0:
     
-    pplot.plot(xCoords[0],yCoords[0], 'r*') #hostile all, hostile close
-    pplot.plot(xCoords[1],yCoords[1], 'rv')    
-    pplot.plot(xCoords[2],yCoords[2], 'ro')
-    pplot.plot(xCoords[3],yCoords[3], 'y*')
     pplot.plot(xCoords[4],yCoords[4], 'yv')
     pplot.plot(xCoords[5],yCoords[5], 'yo')
-    pplot.plot(xCoords[6],yCoords[6], 'g*')
     pplot.plot(xCoords[7],yCoords[7], 'gv')
     pplot.plot(xCoords[8],yCoords[8], 'go')
+    pplot.plot(xCoords[1],yCoords[1], 'rv')    
+    pplot.plot(xCoords[2],yCoords[2], 'ro')    
+    pplot.plot(xCoords[3],yCoords[3], 'y*')
+    pplot.plot(xCoords[0],yCoords[0], 'r*')
+    pplot.plot(xCoords[6],yCoords[6], 'g*')
     pplot.axis([-8,18,-8,18])
     pplot.show()
     
     #RUN A GENERATION
-    for ccp in range(0,2*numberOfImps):
+    for ccp in range(0,5*numberOfImps):
         #CHOOSE A PAIR OF PLANTS
         chosepair = wre(proxlist[2])
         imp1 = int(proxlist[0][chosepair])
@@ -239,7 +245,7 @@ while megakill == 0:
                             proxlist[0][tct] = ccd1
                             proxlist[1][tct] = ccd2
                             dis = numpy.linalg.norm(impLocations[ccd1]-impLocations[ccd2])
-                            proxlist[2][tct] = 1/(dis*dis)
+                            proxlist[2][tct] = 1/(math.pow(dis,2-mobility))
                             tct += 1
                     ccd1 += 1
                 
@@ -368,7 +374,7 @@ while megakill == 0:
                 proxlist[0][tct] = ccd1
                 proxlist[1][tct] = ccd2
                 dis = numpy.linalg.norm(impLocations[ccd1]-impLocations[ccd2])
-                proxlist[2][tct] = 1/(dis*dis)
+                proxlist[2][tct] = 1/(math.pow(dis,2-mobility))
                 tct += 1
             ccd1 += 1
         
